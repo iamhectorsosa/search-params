@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@search-params/react": "file:../packages/react",
+    "@search-params/react": "^0",
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18",
