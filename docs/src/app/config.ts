@@ -1,11 +1,11 @@
-import { createSearchConfig } from "@search-params/react";
+import { createSearchParamsConfig } from "@search-params/react";
 import { fallback, number, object, parse, string, optional } from "valibot";
 
-const QueryParamsSchema = object({
+const searchParamsSchema = object({
   page: fallback(number(), 1),
   item: fallback(optional(string()), undefined),
 });
 
-export const searchConfig = createSearchConfig({
-  home: (search) => parse(QueryParamsSchema, search),
+export const config = createSearchParamsConfig({
+  home: (search) => parse(searchParamsSchema, search),
 });
