@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsup ./src --format cjs,esm --no-splitting --dts",
     "prepare": "pnpm run build",
-    "lint": "tsc"
+    "lint": "tsc",
+    "ci": "pnpm run lint && pnpm run build"
   },
   "keywords": [
     "react",
