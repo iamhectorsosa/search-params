@@ -2,7 +2,7 @@
   "name": "@search-params/react",
   "license": "MIT",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsup ./src --format cjs,esm --no-splitting --dts",
     "prepare": "pnpm run lint && pnpm run build",
-    "lint": "tsc"
+    "lint": "tsc",
+    "release": "pnpm run lint && pnpm run build && changeset publish"
   },
   "keywords": [
     "react",
@@ -20,6 +21,7 @@
   ],
   "author": "",
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "tsup": "^6",
