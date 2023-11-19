@@ -18,7 +18,7 @@ importers:
   docs:
     dependencies:
       '@search-params/react':
-        specifier: link:../packages/react
+        specifier: workspace:^
         version: link:../packages/react
       next:
         specifier: 14.0.0
