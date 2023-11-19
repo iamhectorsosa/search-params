@@ -15,6 +15,11 @@
     "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
     "pub:release": "pnpm build && pnpm publish --access public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamhectorsosa/search-params",
+    "directory": "packages/react"
+  },
   "keywords": [
     "react",
     "hooks",
