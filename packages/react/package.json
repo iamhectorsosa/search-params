@@ -11,7 +11,9 @@
     "build": "tsup ./src --format cjs,esm --no-splitting --dts",
     "prepare": "pnpm run lint && pnpm run build",
     "lint": "tsc",
-    "release": "pnpm run lint && pnpm run build && changeset publish"
+    "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
+    "pub:next": "pnpm build && pnpm publish --no-git-checks --access public --tag next",
+    "pub:release": "pnpm build && pnpm publish --access public"
   },
   "keywords": [
     "react",
@@ -19,9 +21,11 @@
     "URL",
     "params"
   ],
-  "author": "",
+  "author": {
+    "name": "Hector Sosa",
+    "url": "https://hectorsosa.me"
+  },
   "devDependencies": {
-    "@changesets/cli": "^2.26.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "tsup": "^6",
