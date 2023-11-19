@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@search-params/react": "workspace:^",
+    "@search-params/react": "file:../packages/react",
     "next": "14.0.0",
     "react": "^18",
     "react-dom": "^18",
@@ -25,6 +25,5 @@
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5"
-  },
-  "packageManager": "pnpm@8.6.11"
+  }
 }
