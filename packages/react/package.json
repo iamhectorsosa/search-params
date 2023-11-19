@@ -1,0 +1,33 @@
+{
+  "name": "@search-params/react",
+  "license": "MIT",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup ./src --format cjs,esm --no-splitting --dts",
+    "prepare": "pnpm run build",
+    "lint": "tsc"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "URL",
+    "params"
+  ],
+  "author": "",
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "tsup": "^6",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "next": "14.0.0",
+    "react": "^18",
+    "react-dom": "^18"
+  }
+}

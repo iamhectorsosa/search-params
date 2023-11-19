@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn {
+  @apply bg-slate-600 px-4 h-10 rounded hover:bg-slate-700 active:bg-slate-800;
+}
+
+.link {
+  @apply underline underline-offset-8 hover:text-slate-300;
+}
