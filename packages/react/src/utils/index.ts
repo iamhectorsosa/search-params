@@ -1,34 +1,43 @@
-import { type RouteConfig } from "../types";
+import { type SearchParamsConfig } from "../config";
 
-function parseQueryParams(
-  search: string
-): Record<string, string | number | boolean | object> {
+type SearchParams = Record<string, string | number | boolean | object | unknown>;
+
+function parseQueryParams(search: string): SearchParams {
   const searchParams = new URLSearchParams(search);
 
-  return [...searchParams.entries()].reduce<
-    Record<string, string | number | boolean | object>
-  >((params, [key, value]) => {
-    const decodedValue = decodeURIComponent(value);
-    try {
-      const parsedValue = JSON.parse(decodedValue);
-      params[key] = parsedValue;
-    } catch (_e) {
-      params[key] = decodedValue;
-    }
+  return [...searchParams.entries()].reduce<SearchParams>(
+    (params, [key, value]) => {
+      const decodedValue = decodeURIComponent(value);
+      try {
+        const parsedValue = JSON.parse(decodedValue);
+        params[key] = parsedValue;
+      } catch (_e) {
+        params[key] = decodedValue;
+      }
 
-    return params;
-  }, {});
+      return params;
+    },
+    {}
+  );
 }
 
-export function validate<T extends RouteConfig[keyof RouteConfig]>(
-  routeValidator: T,
-  search: string = ""
-): ReturnType<T> {
-  return routeValidator(parseQueryParams(search)) as ReturnType<T>;
+export function validate<
+  TSchemaValidatorFn extends SearchParamsConfig[keyof SearchParamsConfig]
+>(
+  routeValidator: TSchemaValidatorFn,
+  search: string | SearchParams = ""
+): ReturnType<TSchemaValidatorFn> {
+  return (
+    typeof search === "string"
+      ? routeValidator(parseQueryParams(search))
+      : routeValidator(search)
+  ) as ReturnType<TSchemaValidatorFn>;
 }
 
-export function stringify<T extends ReturnType<RouteConfig[keyof RouteConfig]>>(
-  input: T,
+export function stringify<
+  TSchema extends ReturnType<SearchParamsConfig[keyof SearchParamsConfig]>
+>(
+  input: TSchema,
   config: { addQueryPrefix: boolean } = { addQueryPrefix: true }
 ): string {
   const filteredInput = Object.fromEntries(

@@ -1,3 +1,9 @@
-import { RouteConfig } from "../types";
+type SchemaValidatorFn = (
+  search: Record<string, unknown>
+) => Record<string, unknown>;
 
-export const createSearchConfig = <T extends RouteConfig>(config: T) => config;
+export type SearchParamsConfig = Record<string, SchemaValidatorFn>;
+
+export const createSearchParamsConfig = <TConfig extends SearchParamsConfig>(
+  searchParamsConfig: TConfig
+) => searchParamsConfig;

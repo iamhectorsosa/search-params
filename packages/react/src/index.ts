@@ -1,4 +1,3 @@
-export { type RouteConfig } from "./types";
-export { createSearchConfig } from "./config";
-export { useSearchParams } from "./hooks/useSearchParams";
-export { SearchParamsProvider } from "./context/SearchParams";
+export { type SearchParamsConfig, createSearchParamsConfig } from "./config";
+export { SearchParamsProvider } from "./context";
+export { useSearchParams } from "./hooks";
