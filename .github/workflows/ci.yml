@@ -33,5 +33,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build and Lint
+      - name: Build, Lint and Test
         run: pnpm run ci

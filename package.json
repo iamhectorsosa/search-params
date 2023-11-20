@@ -8,7 +8,9 @@
   "scripts": {
     "build": "turbo build",
     "lint": "turbo lint",
-    "ci": "turbo build lint",
+    "ci": "turbo build lint test",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
     "release": "changeset publish",
     "version": "changeset version"
   },
