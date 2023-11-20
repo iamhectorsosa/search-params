@@ -6,8 +6,6 @@ on:
 
 jobs:
   release:
-    if: github.repository == 'iamhectorsosa/search-params'
-
     name: Release
     runs-on: ubuntu-latest
 
