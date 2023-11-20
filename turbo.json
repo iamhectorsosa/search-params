@@ -10,10 +10,6 @@
         "!.next/cache/**"
       ]
     },
-    "deploy": {
-      "dependsOn": [
-        "^build"
-      ]
-    }
+    "lint": {}
   }
 }

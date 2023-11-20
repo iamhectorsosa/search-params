@@ -6,7 +6,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "turbo run build --filter=./packages/\\*",
+    "build": "turbo build --filter=./packages/\\*",
+    "lint": "turbo lint",
+    "ci": "turbo build lint --filter=./packages/\\*",
     "release": "changeset publish",
     "version": "changeset version"
   },
