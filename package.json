@@ -6,7 +6,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "turbo run build --filter=./packages/\\*"
+    "build": "turbo run build --filter=./packages/\\*",
+    "release": "changeset publish",
+    "version": "changeset version"
   },
   "keywords": [],
   "author": {
@@ -14,6 +16,7 @@
     "url": "https://hectorsosa.me"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.2",
     "turbo": "^1.10.16"
   }
 }
