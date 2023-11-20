@@ -35,7 +35,7 @@ export default function Home() {
         Search Params
       </h1>
       <p className="text-lg">
-        Read and update URLSearchParams with full type-safety.
+        Read and update URLSearchParams with full type-safety
       </p>
       <p className="text-lg text-muted-foreground">
         The current search query is:
