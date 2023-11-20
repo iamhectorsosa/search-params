@@ -6,12 +6,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "turbo run build:tailwind build --filter=./packages/\\*",
-    "clean": "turbo run clean",
-    "lint": "tsc"
+    "build": "turbo run build:tailwind build --filter=./packages/\\*"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Hector Sosa",
+    "url": "https://hectorsosa.me"
+  },
   "devDependencies": {
     "@types/node": "^20",
     "turbo": "^1.10.16",
