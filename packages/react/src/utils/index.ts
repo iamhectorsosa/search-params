@@ -1,6 +1,9 @@
 import { type SearchParamsConfig } from "../config";
 
-type SearchParams = Record<string, string | number | boolean | object | unknown>;
+type SearchParams = Record<
+  string,
+  string | number | boolean | object | unknown
+>;
 
 function parseQueryParams(search: string): SearchParams {
   const searchParams = new URLSearchParams(search);
@@ -45,6 +48,12 @@ export function stringify<
       .filter(
         ([, value]) => value !== undefined && value !== "" && value !== null
       )
+      .filter(([, value]) => {
+        if (value && typeof value === "object") {
+          return Object.entries(value).length !== 0;
+        }
+        return true;
+      })
       .map(([key, value]) => [
         key,
         typeof value === "string" ? value : JSON.stringify(value),

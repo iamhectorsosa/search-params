@@ -1,8 +1,12 @@
 # Search Params
 
-The package `@search-params/react`, helps you read and update URL Search Params in React with type-safety.
+Read and update [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) with full type-safety.
 
-## Setting up
+## Documentation
+
+Please visit our [Documentation](https://search-params-docs.vercel.app) for more detailed information.
+
+## Setup
 
 ### 1. Set up the provider
 
@@ -32,7 +36,7 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
 };
 ```
 
-This provider allows `@search-params/react` to read and update URL Search Params with your framework of choice. No adapters needed/
+This provider allows `@search-params/react` to read and update URL Search Params with your framework of choice. No adapters needed.
 
 ### 2. Configure your route validations
 

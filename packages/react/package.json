@@ -9,6 +9,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup ./src --format cjs,esm --no-splitting --dts",
+    "dev": "pnpm run build --watch",
     "prepare": "pnpm run lint && pnpm run build",
     "lint": "tsc",
     "pub:beta": "pnpm build && pnpm publish --no-git-checks --access public --tag beta",
