@@ -8,15 +8,9 @@ importers:
 
   .:
     devDependencies:
-      '@types/node':
-        specifier: ^20
-        version: 20.8.9
       turbo:
         specifier: ^1.10.16
         version: 1.10.16
-      typescript:
-        specifier: ^5
-        version: 5.2.2
 
   docs:
     dependencies:
