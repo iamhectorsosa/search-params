@@ -27,13 +27,13 @@ function parseQueryParams(search: string): SearchParams {
 export function validate<
   TSchemaValidatorFn extends SearchParamsConfig[keyof SearchParamsConfig]
 >(
-  routeValidator: TSchemaValidatorFn,
+  schemaValidator: TSchemaValidatorFn,
   search: string | SearchParams = ""
 ): ReturnType<TSchemaValidatorFn> {
   return (
     typeof search === "string"
-      ? routeValidator(parseQueryParams(search))
-      : routeValidator(search)
+      ? schemaValidator(parseQueryParams(search))
+      : schemaValidator(search)
   ) as ReturnType<TSchemaValidatorFn>;
 }
 
