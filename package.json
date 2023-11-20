@@ -8,7 +8,7 @@
   "scripts": {
     "build": "turbo build --filter=./packages/\\*",
     "lint": "turbo lint",
-    "ci": "turbo build lint --filter=./packages/\\*",
+    "ci": "turbo build --filter=./packages/\\* lint",
     "release": "changeset publish",
     "version": "changeset version"
   },
