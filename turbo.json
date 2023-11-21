@@ -11,6 +11,7 @@
       ],
       "cache": false
     },
+    "dev": {},
     "lint": {},
     "test": {},
     "test:watch": {
