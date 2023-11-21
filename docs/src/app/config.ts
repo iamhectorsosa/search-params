@@ -10,10 +10,12 @@ import {
   array,
   union,
   literal,
+  minValue,
 } from "valibot";
 
+/** Using `valibot` */
 const searchParamsSchema = object({
-  page: fallback(number(), 1),
+  page: fallback(number([minValue(1)]), 1),
   item: fallback(optional(string()), undefined),
   notifications: fallback(optional(boolean()), undefined),
   categories: fallback(
