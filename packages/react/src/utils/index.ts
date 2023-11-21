@@ -39,10 +39,7 @@ export function validate<
 
 export function stringify<
   TSchema extends ReturnType<SearchParamsConfig[keyof SearchParamsConfig]>
->(
-  input: TSchema,
-  config: { addQueryPrefix: boolean } = { addQueryPrefix: true }
-): string {
+>(input: TSchema): string {
   const filteredInput = Object.fromEntries(
     Object.entries({ ...input })
       .filter(
@@ -61,7 +58,7 @@ export function stringify<
   );
   if (Object.entries(filteredInput).length > 0) {
     const queryString = new URLSearchParams(filteredInput).toString();
-    return config?.addQueryPrefix ? "?" + queryString : queryString;
+    return "?" + queryString;
   } else {
     return "";
   }
