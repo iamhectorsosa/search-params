@@ -27,22 +27,19 @@ function parseQueryParams(search: string): SearchParams {
 export function validate<
   TSchemaValidatorFn extends SearchParamsConfig[keyof SearchParamsConfig]
 >(
-  routeValidator: TSchemaValidatorFn,
+  schemaValidator: TSchemaValidatorFn,
   search: string | SearchParams = ""
 ): ReturnType<TSchemaValidatorFn> {
   return (
     typeof search === "string"
-      ? routeValidator(parseQueryParams(search))
-      : routeValidator(search)
+      ? schemaValidator(parseQueryParams(search))
+      : schemaValidator(search)
   ) as ReturnType<TSchemaValidatorFn>;
 }
 
 export function stringify<
   TSchema extends ReturnType<SearchParamsConfig[keyof SearchParamsConfig]>
->(
-  input: TSchema,
-  config: { addQueryPrefix: boolean } = { addQueryPrefix: true }
-): string {
+>(input: TSchema): string {
   const filteredInput = Object.fromEntries(
     Object.entries({ ...input })
       .filter(
@@ -61,7 +58,7 @@ export function stringify<
   );
   if (Object.entries(filteredInput).length > 0) {
     const queryString = new URLSearchParams(filteredInput).toString();
-    return config?.addQueryPrefix ? "?" + queryString : queryString;
+    return "?" + queryString;
   } else {
     return "";
   }
