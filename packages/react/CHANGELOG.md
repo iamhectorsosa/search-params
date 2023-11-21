@@ -1,5 +1,11 @@
 # @search-params/react
 
+## 0.0.6
+
+### Patch Changes
+
+- c5daef3: Adding Utility Tests Cases
+
 ## 0.0.5
 
 ### Patch Changes
