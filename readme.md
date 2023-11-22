@@ -1,18 +1,20 @@
 # Search Params
 
-Read and update [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) with full type-safety. This repository includes the following packages:
-
-- `@search-params/react`
+Read and write [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) with full type-safety using `@search-params/react` using any React Framework and any schema validation library.
 
 ## Documentation
 
-Please visit our [Documentation](https://search-params-docs.vercel.app) for more detailed information.
+For usage please reference `@search-params/react` [readme.md](/packages/react/readme.md) for more detailed information.
 
 ## Development
 
 ### Installation
 
-The Search Params repository uses [PNPM Workspaces](https://pnpm.io/workspaces) and [Turborepo](https://github.com/vercel/turborepo). To install dependencies, run `pnpm install` in the project root directory.
+The Search Params repository uses [PNPM Workspaces](https://pnpm.io/workspaces) and [Turborepo](https://github.com/vercel/turborepo). To install dependencies, run in the project's root directory:
+
+```bash
+pnpm install
+```
 
 ### Development
 

@@ -1,19 +1,28 @@
 # Search Params
 
-Read and update [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) with full type-safety.
+Read and write [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) with full type-safety using `@search-params/react` using any React Framework and any schema validation library.
 
 ## Documentation
 
-Please visit our [Documentation](https://search-params-docs.vercel.app) for more detailed information.
+For usage development reference the project's [readme.md](../../readme.md) for more detailed information.
 
-## Setup
+## Introduction
+
+This project is heavily inspired by TanStack's Router [Search Params](https://tanstack.com/router/v1/docs/guide/search-params) with the exception that (a) it isn't limited to a specific React framework and (b) it reads and writes Search Params using the same hook.
+
+### Why Search Params?
+
+The URL Search Params is perfectly able to act as a form of global state. If you would like to know more about this, give TanStack's Router [Search Params, the "OG" State Manager](https://tanstack.com/router/v1/docs/guide/search-params#search-params-the-og-state-manager) a read.
+
+## Getting Started
 
 ### 1. Set up the provider
 
-First import `SearchParamsProvider` and pass in the query string and router methods from your framework of choice. The example below is using Next.
+Use `SearchParamsProvider` and pass in (a) the query string and (b) router methods from your framework of choice. This provider allows `@search-params/react` to read and write Search Params with your React framework of choice. No framework-specific adapters needed. The example below is using Next.
 
 ```tsx
 "use client";
+
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SearchParamsProvider } from "@search-params/react";
@@ -24,8 +33,10 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   return (
     <SearchParamsProvider
+      // TODO: Also accept type URLSearchParams, replace `queryString` with `query`
       queryString={searchParams.toString()}
       router={{
+        // TODO: Add config option `{ scroll: boolean }`
         push: (href) => router.push(href),
         replace: (href) => router.replace(href),
       }}
@@ -36,11 +47,9 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
 };
 ```
 
-This provider allows `@search-params/react` to read and update URL Search Params with your framework of choice. No adapters needed.
+### 2. Set up your schema validations
 
-### 2. Configure your route validations
-
-Import `createSearchParamsConfig` and create a config object to handle all validations. Can work with any validation library or with none at all if you want to manually write your validations.
+Use `createSearchParamsConfig` to create a config object to handle all validations. You can choose any schema validation library (i.e. Valibot, Zod, Yup, etc..), or write your own, to handle your validations.
 
 ```ts
 import { createSearchParamsConfig } from "@search-params/react";
@@ -52,15 +61,27 @@ const searchParamsSchema = object({
 });
 
 export const config = createSearchParamsConfig({
+  // TODO: Accept directly object with `parse` or `_parse` property
   home: (search) => parse(searchParamsSchema, search),
 });
 ```
 
 ## Usage
 
-### Hook Options
+### Type Declaration `useSearchParams`
 
-The `useSearchParams` hooks gives you typesafety for all query parameters and its methods: `setQuery` (accepts funtional updates) and `clearQuery`.
+```ts
+// TODO: Replace TSchema with TSearchParams
+type UseSearchParams<TSchema> = TSchema & {
+  setQuery: (
+    // TODO: Remove the optional parameter
+    input?: Partial<TSchema> | ((prevParams: TSchema) => Partial<TSchema>)
+  ) => void;
+  clearQuery: () => void;
+};
+```
+
+### Read Search Params
 
 ```tsx
 "use client";
@@ -70,15 +91,16 @@ import { useSearchParams } from "@search-params/react";
 import { config } from "./config";
 
 export default function Home() {
-  const { page, item, setQuery, clearQuery } = useSearchParams({
+  const { page, item } = useSearchParams({
+    // ˄ page: number;
+    // ˄ item: string | undefined;
     route: config.home,
+    // TODO: Accept inline schemas
   });
 }
 ```
 
-### Updating Queries
-
-You can pass a partial URL Search Params with typesafety or use functional updates
+### Set Search Params
 
 ```tsx
 "use client";
@@ -88,23 +110,20 @@ import { useSearchParams } from "@search-params/react";
 import { config } from "./config";
 
 export default function Home() {
-  const { page, item, setQuery, clearQuery } = useSearchParams({
+  const { setQuery } = useSearchParams({
     route: config.home,
   });
 
   return (
     <div>
-      <div>
-        <input
-          value={page}
-          type="number"
-          onChange={(e) =>
-            setQuery({
-              page: parseInt(e.currentTarget.value),
-            })
-          }
-        />
-      </div>
+      <Input
+        type="text"
+        onChange={(e) =>
+          setQuery({
+            item: e.currentTarget.value,
+          })
+        }
+      />
       <button
         onClick={() =>
           setQuery(({ page }) => ({
@@ -112,14 +131,14 @@ export default function Home() {
           }))
         }
       >
-        Add +1 Page
+        Add +1
       </button>
     </div>
   );
 }
 ```
 
-### Clear Queries
+### Clear Search Params
 
 ```tsx
 "use client";
@@ -129,14 +148,14 @@ import { useSearchParams } from "@search-params/react";
 import { config } from "./config";
 
 export default function Home() {
-  const { page, item, setQuery, clearQuery } = useSearchParams({
+  const { clearQuery } = useSearchParams({
     route: config.home,
   });
 
-  return (
-    <div>
-      <button onClick={() => clearQuery()}>Clear Search Params</button>
-    </div>
-  );
+  return <button onClick={() => clearQuery()}>Clear Search Params</button>;
 }
 ```
+
+## Feedback or Issues
+
+If you would like to submit any feedback or issues you have encountered, please do so by creating a [GitHub Issue](https://github.com/iamhectorsosa/search-params/issues)
