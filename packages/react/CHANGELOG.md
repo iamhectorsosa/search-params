@@ -1,5 +1,11 @@
 # @search-params/react
 
+## 0.0.7
+
+### Patch Changes
+
+- 0faafb2: Refactoring hook utils and improving type annotations
+
 ## 0.0.6
 
 ### Patch Changes
