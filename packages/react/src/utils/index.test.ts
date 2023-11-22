@@ -1,74 +1,13 @@
 import { describe, expect, test } from "vitest";
-import { stringify, validate } from ".";
+import { parseString, stringify } from ".";
 
-const schemaValidatorFn = (search: Record<string, unknown>) => ({
-  foo: search?.foo || 1,
-  bar: search?.bar || "hello",
-  baz: search?.baz || false,
-  qux: search?.qux || undefined,
-});
-
-describe("validate", () => {
-  test("Runs validator fn with fallback when no search string is provided", () => {
-    const validatedParams = validate(schemaValidatorFn);
-    expect(validatedParams).toStrictEqual({
-      foo: 1,
-      bar: "hello",
-      baz: false,
-      qux: undefined,
-    });
-  });
-
-  test("Runs validator fn when search string is provided", () => {
-    const validatedParams = validate(
-      schemaValidatorFn,
+describe("parseString", () => {
+  test("returns an parsed object", () => {
+    const validatedParams = parseString(
       "?foo=100&bar=goodbye&baz=true&qux=%5B%22one%22%2C%22two%22%5D"
     );
     expect(validatedParams).toStrictEqual({
       foo: 100,
-      bar: "goodbye",
-      baz: true,
-      qux: ["one", "two"],
-    });
-  });
-
-  test("Runs validator fn when search params are provided", () => {
-    const validatedParams = validate(schemaValidatorFn, {
-      foo: 100,
-      bar: "goodbye",
-      baz: true,
-      qux: ["one", "two"],
-    });
-    expect(validatedParams).toStrictEqual({
-      foo: 100,
-      bar: "goodbye",
-      baz: true,
-      qux: ["one", "two"],
-    });
-  });
-
-  test("Runs validator fn with fallback when unexpected search string is provided", () => {
-    const validatedParams = validate(
-      schemaValidatorFn,
-      "?foo2=100&bar=goodbye&baz=true&qux=%5B%22one%22%2C%22two%22%5D"
-    );
-    expect(validatedParams).toStrictEqual({
-      foo: 1,
-      bar: "goodbye",
-      baz: true,
-      qux: ["one", "two"],
-    });
-  });
-
-  test("Runs validator fn with fallback when unexpected search params are provided", () => {
-    const validatedParams = validate(schemaValidatorFn, {
-      foo2: 100,
-      bar: "goodbye",
-      baz: true,
-      qux: ["one", "two"],
-    });
-    expect(validatedParams).toStrictEqual({
-      foo: 1,
       bar: "goodbye",
       baz: true,
       qux: ["one", "two"],

@@ -26,21 +26,6 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 
-const validationSchema = `/** Using valibot */
-const searchParamsSchema = object({
-  page: fallback(number([minValue(1)]), 1),
-  item: fallback(optional(string()), undefined),
-  notifications: fallback(optional(boolean()), undefined),
-  categories: fallback(
-    optional(
-      array(
-        union([literal("electronics"), literal("consoles"), literal("gifts")])
-      )
-    ),
-    undefined
-  ),
-});˝`;
-
 export default function Home() {
   const { page, item, notifications, categories, setQuery, clearQuery } =
     useSearchParams({
@@ -56,12 +41,12 @@ export default function Home() {
         Read and update URLSearchParams with full type-safety
       </p>
       <p className="text-lg">
-        For setup instructions, visit:{" "}
+        For Documentation, visit:{" "}
         <Link
-          href="https://www.npmjs.com/package/@search-params/react"
+          href="https://github.com/iamhectorsosa/search-params"
           className="underline underline-offset-4"
         >
-          npmjs.com/package/@search-params/react
+          github.com/iamhectorsosa/search-params
         </Link>
       </p>
       <Accordion type="multiple" defaultValue={["specs", "playground"]}>
@@ -73,13 +58,6 @@ export default function Home() {
           </AccordionTrigger>
           <AccordionContent>
             <div className="space-y-6 py-3">
-              <p className="leading-7 text-lg">
-                Use in any React framework and with any schema validation
-                library. Install by running:{" "}
-                <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold whitespace-nowrap">
-                  pnpm i @search-params/react
-                </code>
-              </p>
               <p className="text-lg text-muted-foreground">
                 The current validation Schema is:
               </p>
@@ -265,7 +243,10 @@ export default function Home() {
                 </div>
               </div>
               <div className="space-x-2">
-                <Button variant="destructive" onClick={() => clearQuery()}>
+                <Button
+                  variant="destructive"
+                  onClick={() => clearQuery({ scroll: true })}
+                >
                   Clear Search Params
                 </Button>
               </div>
@@ -276,3 +257,18 @@ export default function Home() {
     </div>
   );
 }
+
+const validationSchema = `/** Using valibot */
+const searchParamsSchema = object({
+  page: fallback(number([minValue(1)]), 1),
+  item: fallback(optional(string()), undefined),
+  notifications: fallback(optional(boolean()), undefined),
+  categories: fallback(
+    optional(
+      array(
+        union([literal("electronics"), literal("consoles"), literal("gifts")])
+      )
+    ),
+    undefined
+  ),
+});˝`;

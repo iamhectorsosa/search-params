@@ -8,13 +8,7 @@ export const Providers: React.FC<React.PropsWithChildren> = ({ children }) => {
   const searchParams = useSearchParams();
 
   return (
-    <SearchParamsProvider
-      queryString={searchParams.toString()}
-      router={{
-        push: (href) => router.push(href, { scroll: false }),
-        replace: (href) => router.replace(href, { scroll: false }),
-      }}
-    >
+    <SearchParamsProvider query={searchParams} router={router}>
       {children}
     </SearchParamsProvider>
   );

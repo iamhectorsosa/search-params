@@ -1,16 +1,20 @@
 import * as React from "react";
 import { SearchParamsConfig } from "../config";
 import { SearchParamsContext } from "../context";
-import { stringify, validate } from "../utils";
+import { parseString, stringify } from "../utils";
 
-type UseSearchParamsUtils<TSchema> = {
+type UseSearchParamsFn<TSearchParams> = {
   setQuery: (
-    input?: Partial<TSchema> | ((prevParams: TSchema) => Partial<TSchema>)
+    input:
+      | Partial<TSearchParams>
+      | ((prevParams: TSearchParams) => Partial<TSearchParams>),
+    options?: { scroll: boolean }
   ) => void;
-  clearQuery: () => void;
+  clearQuery: (options?: { scroll: boolean }) => void;
 };
 
-type UseSearchParams<TSchema> = TSchema & UseSearchParamsUtils<TSchema>;
+type UseSearchParams<TSearchParams> = TSearchParams &
+  UseSearchParamsFn<TSearchParams>;
 
 export function useSearchParams<
   TSchemaValidatorFn extends SearchParamsConfig[keyof SearchParamsConfig]
@@ -25,40 +29,42 @@ export function useSearchParams<
   }
 
   const params = React.useMemo<ReturnType<TSchemaValidatorFn>>(
-    () => validate(routeValidator, context.queryString),
+    () =>
+      routeValidator(
+        parseString(context.query.toString())
+      ) as ReturnType<TSchemaValidatorFn>,
     [routeValidator, context]
   );
 
   React.useEffect(() => {
-    if (stringify(params) !== context.queryString) {
+    if (stringify(params) !== "?" + context.query.toString()) {
       context.router.replace(stringify(params));
     }
-  }, [context.queryString, context.router, params]);
+  }, [context.query.toString(), context.router, params]);
 
   const setQuery = React.useCallback<
-    UseSearchParamsUtils<ReturnType<TSchemaValidatorFn>>["setQuery"]
+    UseSearchParamsFn<ReturnType<TSchemaValidatorFn>>["setQuery"]
   >(
-    (input) => {
-      const updateParams = (prevState: ReturnType<TSchemaValidatorFn>) => {
-        if (typeof input === "function") {
-          return { ...prevState, ...input(prevState) };
-        }
-        return input ? { ...prevState, ...input } : prevState;
-      };
-
-      const updatedParams = validate(routeValidator, updateParams(params));
-      const href = stringify(updatedParams);
-      context.router.push(href);
+    (input, { scroll } = { scroll: false }) => {
+      const getInput = (prevState: ReturnType<TSchemaValidatorFn>) =>
+        typeof input === "function"
+          ? { ...prevState, ...input(prevState) }
+          : { ...prevState, ...input };
+      const href = stringify(routeValidator(getInput(params)));
+      context.router.push(href, { scroll });
     },
     [context.router, routeValidator, params]
   );
 
   const clearQuery = React.useCallback<
-    UseSearchParamsUtils<ReturnType<TSchemaValidatorFn>>["clearQuery"]
-  >(() => {
-    const href = stringify(validate(routeValidator));
-    context.router.push(href);
-  }, [context.router, routeValidator, params]);
+    UseSearchParamsFn<ReturnType<TSchemaValidatorFn>>["clearQuery"]
+  >(
+    ({ scroll } = { scroll: false }) => {
+      const href = stringify(routeValidator({}));
+      context.router.push(href, { scroll });
+    },
+    [context.router, routeValidator, params]
+  );
 
   return {
     ...params,

@@ -1,25 +1,21 @@
 import * as React from "react";
 
-type QueryString = string;
-
-type Router = {
-  push: (href: string) => void;
-  replace: (href: string) => void;
-};
-
-type SearchParamsContextType = {
-  queryString: QueryString;
-  router: Router;
+type SearchParamsProviderProps = {
+  query: URLSearchParams | string;
+  router: {
+    push: (href: string, options?: { scroll: boolean }) => void;
+    replace: (href: string) => void;
+  };
 };
 
 export const SearchParamsContext =
-  React.createContext<SearchParamsContextType | null>(null);
+  React.createContext<SearchParamsProviderProps | null>(null);
 
 export const SearchParamsProvider: React.FC<
-  React.PropsWithChildren<SearchParamsContextType>
-> = ({ children, queryString, router }) => {
+  React.PropsWithChildren<SearchParamsProviderProps>
+> = ({ children, query, router }) => {
   return (
-    <SearchParamsContext.Provider value={{ queryString, router }}>
+    <SearchParamsContext.Provider value={{ query, router }}>
       {children}
     </SearchParamsContext.Provider>
   );
