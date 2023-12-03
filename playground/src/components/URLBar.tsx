@@ -15,7 +15,7 @@ export const URLBar: React.FC = () => {
     <section className="sticky top-0 bg-background/70 backdrop-blur z-10 py-4">
       <div
         style={ARC_DEV_MODE_BG}
-        className="p-4 w-full whitespace-nowrap overflow-x-scroll text-xs relative"
+        className="p-4 w-full whitespace-nowrap overflow-x-scroll text-xs"
       >
         <code>{location.search}</code>
         {location.search !== "?page=1" && (
